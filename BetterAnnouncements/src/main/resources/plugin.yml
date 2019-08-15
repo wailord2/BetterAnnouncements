@@ -1,0 +1,16 @@
+name: BetterAnnouncements
+version: ${project.version}
+main: wailord2.betterannouncements.betterannouncements.BetterAnnouncements
+api-version: "1.13"
+authors: [wailord2]
+description: Plugin to announce things in chat on a set interval
+commands:
+  bareload:
+    usage: /<command>
+    description: Used to reload BetterAnnouncements config and announcements
+
+permissions:
+  betterannouncements.use:
+    default: op
+  testperm:
+    default: op
