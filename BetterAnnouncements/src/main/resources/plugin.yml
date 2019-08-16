@@ -12,5 +12,3 @@ commands:
 permissions:
   betterannouncements.use:
     default: op
-  testperm:
-    default: op

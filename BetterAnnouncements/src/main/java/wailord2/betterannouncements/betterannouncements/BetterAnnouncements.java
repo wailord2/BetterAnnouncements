@@ -38,13 +38,13 @@ public final class BetterAnnouncements extends JavaPlugin implements CommandExec
                 Files.createFile(datapath);
                 try (BufferedWriter bw = new BufferedWriter(new FileWriter(datapath.toString()))) {
 
-                    bw.write("Example announcement");
+                    bw.write("§4Example announcement");
                     bw.newLine();
-                    bw.write("This is part of the example");
+                    bw.write("§4This is part of the example");
                     bw.newLine();
                     bw.write("~");
                     bw.newLine();
-                    bw.write("This is another announcement");
+                    bw.write("§3This is another announcement");
                     bw.newLine();
                 }
 
@@ -65,17 +65,17 @@ public final class BetterAnnouncements extends JavaPlugin implements CommandExec
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
         if(cmd.getName().equalsIgnoreCase("bareload")){
 
-            if(!sender.hasPermission("betterannouncements.use")){
-                return false;
+            if(sender.hasPermission("betterannouncements.use")){
+                config  = YamlConfiguration.loadConfiguration(cFile);
+                getServer().getConsoleSender().sendMessage("BetterAnnouncer - Reloaded config");
+                try {
+                    timer.cancel();
+                    getAnnouncements(datapath);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
-            config  = YamlConfiguration.loadConfiguration(cFile);
-            getServer().getConsoleSender().sendMessage("BetterAnnouncer - Reloaded config");
-            try {
-                timer.cancel();
-                getAnnouncements(datapath);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+
         }
         return true;
     }
