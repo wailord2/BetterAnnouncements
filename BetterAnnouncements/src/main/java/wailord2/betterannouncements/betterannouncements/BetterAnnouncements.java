@@ -1,11 +1,13 @@
 package wailord2.betterannouncements.betterannouncements;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
@@ -75,6 +77,14 @@ public final class BetterAnnouncements extends JavaPlugin implements CommandExec
                     e.printStackTrace();
                 }
             }
+            else{
+                try{
+                    sender.sendMessage(ChatColor.RED + "You dont have permission for this command.");
+                }
+                catch (Exception e){
+                    getServer().getLogger().severe(e.getMessage());
+                }
+            }
 
         }
         return true;
@@ -116,18 +126,20 @@ public final class BetterAnnouncements extends JavaPlugin implements CommandExec
 
                     for(int i = 0; i<announcement.size(); i++){
                         if(i != announcement.size()-1){
-                            Bukkit.broadcast(announcement.get(i), perm);
+                            for (Player player : Bukkit.getOnlinePlayers()) {
+                                if(player.hasPermission(perm)){
+                                    player.sendMessage(announcement.get(i));
+                                }
+                            }
                         }
                     }
                 }else{
-                    for (String line : announcement) {
-                        Bukkit.broadcastMessage(line);
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        for (String line : announcement) {
+                            player.sendMessage(line);
+                        }
                     }
                 }
-
-//                for (String line : announcement) {
-//                    Bukkit.broadcastMessage(line);
-//                }
 
                 iterator++;
                 if(iterator >= announcements.size()){
